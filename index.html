@@ -338,14 +338,8 @@ a{color:inherit;text-decoration:none}
 .cards-scroll-arr:hover{background:rgba(0,0,0,0.7);transform:translateY(-50%) scale(1.06)}
 /* Grid template columns transition — buttery smooth, browser optimizes better
    than flex-grow (no layout thrashing per card). :has() lets each card control the row. */
-.vessels-strip{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px;contain:layout paint style;
-  padding:24px 40px 32px;align-items:stretch;overflow:hidden;
-  transition:grid-template-columns 900ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change:grid-template-columns}
-.vessels-strip:has(.vessel-card:nth-child(1):hover){grid-template-columns:1.2fr 1fr 1fr 1fr}
-.vessels-strip:has(.vessel-card:nth-child(2):hover){grid-template-columns:1fr 1.2fr 1fr 1fr}
-.vessels-strip:has(.vessel-card:nth-child(3):hover){grid-template-columns:1fr 1fr 1.2fr 1fr}
-.vessels-strip:has(.vessel-card:nth-child(4):hover){grid-template-columns:1fr 1fr 1fr 1.2fr}
+.vessels-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+  padding:24px 40px 32px;align-items:stretch}
 .vessels-arr{display:none}
 
 /* Cards fill their grid column — no flex needed */
@@ -612,9 +606,8 @@ footer{background:var(--paper);padding:40px 40px 80px;color:var(--mute);font-siz
 /* ====================================================================== */
 /* REVEAL — snappy slide-up. Fires when element is well into viewport (IO -15%) */
 /* ====================================================================== */
-/* Vessel cards fade in without transform to avoid paint jitter with grid-template-columns transition */
-.vessel-card.reveal{transform:none;will-change:opacity}
-.vessel-card.reveal.in{transform:none}
+/* Vessel cards: no entrance animation — prevents any flicker on scroll-in */
+.vessel-card.reveal,.vessel-card.reveal.in{opacity:1;transform:none;transition:none;will-change:auto;transition-delay:0s}
 .reveal{opacity:0;transform:translate3d(0,40px,0);will-change:opacity,transform;
   transition:opacity .6s cubic-bezier(0.22,1,0.36,1),
              transform .6s cubic-bezier(0.22,1,0.36,1)}
