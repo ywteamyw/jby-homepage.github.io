@@ -1560,21 +1560,35 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       fade.classList.add('active');
       setTimeout(() => fade.classList.remove('active'), 500);
     }
-    // Swap media at the peak of the dim (~350ms in) so cross-fade feels natural
+    // Swap media at the peak of the dim (~350ms in) so cross-fade feels natural.
+    // Always set the image bg first so something is visible while the video downloads.
     const doSwap = () => {
+      if (bg){
+        const imgUrl = b.img.startsWith('http') ? b.img : './JBY-V3.3-assets/' + b.img;
+        bg.style.backgroundImage = "url('" + imgUrl + "')";
+        bg.style.opacity = 1;
+      }
       if (b.video && bgv){
         const vsrc = './JBY-V3.3-assets/' + b.video;
-        if (bgv.getAttribute('src') !== vsrc){ bgv.src = vsrc; bgv.load(); }
-        bgv.muted = true;
-        bgv.play().catch(()=>{});
-        if (bg) bg.style.opacity = 0;
-        bgv.style.opacity = 1;
-      } else if (bg){
-        if (bgv){ bgv.style.opacity = 0; bgv.pause && bgv.pause(); }
-        bg.style.opacity = 0;
-        const url = b.img.startsWith('http') ? b.img : './JBY-V3.3-assets/' + b.img;
-        bg.style.backgroundImage = "url('" + url + "')";
-        bg.style.opacity = 1;
+        // Hide video until it can play so we don't show the dark placeholder
+        bgv.style.opacity = 0;
+        const showVideo = () => {
+          bgv.muted = true;
+          bgv.play().catch(()=>{});
+          bgv.style.opacity = 1;
+          if (bg) bg.style.opacity = 0;
+        };
+        if (bgv.getAttribute('src') !== vsrc){
+          bgv.src = vsrc;
+          bgv.load();
+          bgv.addEventListener('canplay', showVideo, { once: true });
+        } else {
+          // Same video already loaded — show immediately
+          showVideo();
+        }
+      } else if (bgv){
+        bgv.style.opacity = 0;
+        try { bgv.pause(); } catch(e){}
       }
     };
     setTimeout(doSwap, 300);
