@@ -1693,16 +1693,18 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
     const map = L.map('leaflet-map', { zoomControl:true, scrollWheelZoom:false, attributionControl:false }).setView([37, -98], 4);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', { subdomains:'abcd', maxZoom:19 }).addTo(map);
     const locs = [
-      {slug:'san-diego-boatyard', coords:[32.7100,-117.2300]},
-      {slug:'san-diego',          coords:[32.7157,-117.1611]},
-      {slug:'newport-harbor',     coords:[33.6189,-117.9298], type:'maritime'},
-      {slug:'marina-del-rey',     coords:[33.9802,-118.4517]},
-      {slug:'sausalito',          coords:[37.8590,-122.4853]},
-      {slug:'seattle',            coords:[47.6062,-122.3321]},
-      {slug:'kona',               coords:[19.6400,-155.9969]},
-      {slug:'wrightsville-beach', coords:[34.2085, -77.7964]},
-      {slug:'charleston',         coords:[32.7765, -79.9311]},
+      {slug:'san-diego-boatyard', coords:[32.7100,-117.2300], region:'west'},
+      {slug:'san-diego',          coords:[32.7157,-117.1611], region:'west'},
+      {slug:'newport-harbor',     coords:[33.6189,-117.9298], type:'maritime', region:'west'},
+      {slug:'marina-del-rey',     coords:[33.9802,-118.4517], region:'west'},
+      {slug:'sausalito',          coords:[37.8590,-122.4853], region:'west'},
+      {slug:'seattle',            coords:[47.6062,-122.3321], region:'west'},
+      {slug:'kona',               coords:[19.6400,-155.9969], region:'west'},
+      {slug:'wrightsville-beach', coords:[34.2085, -77.7964], region:'east'},
+      {slug:'charleston',         coords:[32.7765, -79.9311], region:'east'},
     ];
+    const DEFAULT_VIEW = {center:[37, -98], zoom:4};
+    const markers = [];
     // Teardrop pins: 30×40. Maritime = sand, all others = brand navy.
     locs.forEach(l => {
       const svg = '<svg viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">'
@@ -1714,12 +1716,28 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
         html: svg, iconSize: [30, 40], iconAnchor: [15, 40]
       });
       const marker = L.marker(l.coords, { icon }).addTo(map);
-      // Click marker → open full location modal (same as clicking the list item)
       marker.on('click', function(){
         var item = document.querySelector('[data-loc="' + l.slug + '"]');
         if (item) item.click();
       });
+      markers.push({marker, region:l.region, coords:l.coords});
     });
+    // Region filter for the map — show only matching pins, zoom to fit.
+    window._jbyMapFilter = function(region){
+      var pts = [];
+      markers.forEach(function(m){
+        var show = (region === 'all' || m.region === region);
+        if (show){ if(!map.hasLayer(m.marker)) m.marker.addTo(map); pts.push(m.coords); }
+        else if (map.hasLayer(m.marker)) map.removeLayer(m.marker);
+      });
+      if (region === 'all' || pts.length === 0){
+        map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
+      } else if (pts.length === 1){
+        map.setView(pts[0], 9);
+      } else {
+        map.fitBounds(pts, {padding:[60,60], maxZoom:8});
+      }
+    };
   }
 
   // LOCATION PREVIEW MODAL — open on chevron click; click name (h5) also opens
@@ -1784,8 +1802,13 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   document.querySelectorAll('.sec-filter').forEach(function(bar){
     var section = bar.closest('section');
     if(!section) return;
-    var items = section.querySelectorAll('[data-region]');
+    // Content items only — exclude the filter buttons (which also carry data-region)
+    var items = Array.prototype.filter.call(
+      section.querySelectorAll('[data-region]'),
+      function(el){ return !el.closest('.sec-filter'); }
+    );
     var subheads = section.querySelectorAll('.visit-list > h4');
+    var isVisit = !!section.querySelector('#leaflet-map');
     bar.querySelectorAll('button').forEach(function(b){
       b.addEventListener('click', function(){
         bar.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
@@ -1796,6 +1819,8 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
         });
         // hide the "Marinas & Boatyards" / "Sales Offices" sub-headers while a region is active
         subheads.forEach(function(h){ h.classList.toggle('region-hide', r!=='all'); });
+        // update the map pins to match the selected region
+        if (isVisit && window._jbyMapFilter) window._jbyMapFilter(r);
       });
     });
   });
