@@ -687,6 +687,18 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   .builders-arr.l{left:16px}.builders-arr.r{right:16px}.builders-arr{width:36px;height:36px}
 }
 
+
+/* SECTION REGION FILTER — underline pills (Events + Locations) */
+.sec-filter{display:flex;gap:28px;align-items:center;max-width:1440px;margin:20px auto 6px;padding:0 40px}
+.sec-filter button{font-family:'Mesmerize',sans-serif;font-weight:300;font-size:14px;letter-spacing:0.04em;
+  text-transform:uppercase;color:var(--mute);background:transparent;border:0;padding:6px 2px 10px;cursor:pointer;
+  position:relative;transition:color .2s}
+.sec-filter button::after{content:"";position:absolute;left:2px;right:2px;bottom:0;height:1px;background:var(--navy);
+  transform:scaleX(0);transform-origin:left;transition:transform .28s cubic-bezier(0.22,1,0.36,1)}
+.sec-filter button.on{color:var(--ink)}
+.sec-filter button.on::after{transform:scaleX(1)}
+.sec-filter-visit{max-width:none;padding:0;margin:0 0 28px}
+.region-hide{display:none !important}
 </style>
 </head>
 <body>
@@ -842,10 +854,15 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       <h2>Upcoming events &amp; private experiences</h2>
       <a class="s-link" href="#">View all events</a>
     </div>
+    <div class="sec-filter reveal" role="tablist" aria-label="Filter events by region">
+      <button class="on" data-region="all">All</button>
+      <button data-region="west">West Coast</button>
+      <button data-region="east">East Coast</button>
+    </div>
     <div class="events-strip-wrap reveal" style="position:relative">
       <button class="cards-scroll-arr" aria-label="Next events" onclick="eventsScroll(1)"><i class="ti ti-chevron-right"></i></button>
       <div class="events-strip" id="events-strip">
-        <article class="event-card has-video">
+        <article class="event-card has-video" data-region="west">
           <div class="img" style="background-image:url('./JBY-V3.3-assets/08_event_newport.jpg')">
             <video class="event-video" muted loop playsinline preload="metadata">
               <source src="./JBY-V3.3-assets/event_newport_video.mp4" type="video/mp4">
@@ -859,7 +876,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
           </div>
           <a class="cta" href="#">Request to attend</a>
         </article>
-        <article class="event-card has-video">
+        <article class="event-card has-video" data-region="west">
           <div class="img" style="background-image:url('./JBY-V3.3-assets/09_event_axopar38.jpg')">
             <video class="event-video" muted loop playsinline preload="metadata">
               <source src="./JBY-V3.3-assets/event_axopar38_video.mp4" type="video/mp4">
@@ -873,7 +890,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
           </div>
           <a class="cta" href="#">Request to attend</a>
         </article>
-        <article class="event-card has-video">
+        <article class="event-card has-video" data-region="east">
           <div class="img" style="background-image:url('./JBY-V3.3-assets/10_event_portcity.jpg')">
             <video class="event-video" muted loop playsinline preload="metadata">
               <source src="./JBY-V3.3-assets/event_portcity_video.mp4" type="video/mp4">
@@ -881,13 +898,13 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
           </div>
           <div class="body">
             <h4>Port City Marina Boat Show</h4>
-            <div class="row"><span class="l">Location</span><span class="r">Newport Beach, CA</span></div>
+            <div class="row"><span class="l">Location</span><span class="r">Wilmington, NC</span></div>
             <div class="row"><span class="l">Date</span><span class="r">Fri, Apr 17 &ndash; Sun, Apr 19</span></div>
             <div class="row"><span class="l">Event Time</span><span class="r">8:00am &ndash; 8:00pm</span></div>
           </div>
           <a class="cta" href="#">Request to attend</a>
         </article>
-        <article class="event-card">
+        <article class="event-card" data-region="west">
           <div class="img" style="background-image:url('./JBY-V3.3-assets/brand_riva.webp')"></div>
           <div class="body">
             <h4>Riva Heritage Day at the Harbor</h4>
@@ -897,7 +914,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
           </div>
           <a class="cta" href="#">Request to attend</a>
         </article>
-        <article class="event-card">
+        <article class="event-card" data-region="west">
           <div class="img" style="background-image:url('./JBY-V3.3-assets/brand_brabus.webp')"></div>
           <div class="body">
             <h4>Brabus Shadow Sea Trial Weekend</h4>
@@ -907,7 +924,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
           </div>
           <a class="cta" href="#">Request to attend</a>
         </article>
-        <article class="event-card">
+        <article class="event-card" data-region="west">
           <div class="img" style="background-image:url('./JBY-V3.3-assets/brand_pershing.jpg')"></div>
           <div class="body">
             <h4>Pershing Owners&rsquo; Reception</h4>
@@ -1068,44 +1085,49 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
     <h2 class="split-words" data-split>Locations, Marinas &amp; Boatyards</h2>
     <a class="s-link" href="#">View all</a>
   </div>
+  <div class="sec-filter sec-filter-visit reveal" role="tablist" aria-label="Filter locations by region">
+    <button class="on" data-region="all">All</button>
+    <button data-region="west">West Coast</button>
+    <button data-region="east">East Coast</button>
+  </div>
   <div class="visit-grid">
     <div class="visit-list reveal">
       <h4>Marinas &amp; Boatyards</h4>
-      <div class="visit-item" data-loc="san-diego-boatyard" data-photo="office_san_diego_boatyard.png" data-type="BOATYARD" data-city="San Diego, CA" data-address="2614 Shelter Island Drive, Suite A, San Diego, CA 92106" data-phone="(619) 222-9899" data-phone-href="tel:+16192229899" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service,Boatyard,Marina" data-fact="This full-service boatyard offers refit, repair, and rigging on the water.">
+      <div class="visit-item" data-loc="san-diego-boatyard" data-region="west" data-photo="office_san_diego_boatyard.png" data-type="BOATYARD" data-city="San Diego, CA" data-address="2614 Shelter Island Drive, Suite A, San Diego, CA 92106" data-phone="(619) 222-9899" data-phone-href="tel:+16192229899" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service,Boatyard,Marina" data-fact="This full-service boatyard offers refit, repair, and rigging on the water.">
         <div class="visit-item-l"><h5>San Diego Marina &amp; Boatyard</h5><small>Mon &ndash; Sat, 8am &ndash; 5pm <span class="visit-appt">&middot; By appointment anytime</span></small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
       <h4>Sales Offices</h4>
-      <div class="visit-item" data-loc="san-diego" data-photo="office_san_diego.jpg" data-type="SALES OFFICE" data-city="San Diego, CA" data-address="2330 Shelter Island Drive, Suite 105, San Diego, CA 92106" data-phone="(619) 222-9899" data-phone-href="tel:+16192229899" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our West Coast flagship, representing Axopar, BRABUS, Riva, and Pershing.">
+      <div class="visit-item" data-loc="san-diego" data-region="west" data-photo="office_san_diego.jpg" data-type="SALES OFFICE" data-city="San Diego, CA" data-address="2330 Shelter Island Drive, Suite 105, San Diego, CA 92106" data-phone="(619) 222-9899" data-phone-href="tel:+16192229899" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our West Coast flagship, representing Axopar, BRABUS, Riva, and Pershing.">
         <div class="visit-item-l"><h5>San Diego</h5><small>Mon &ndash; Sat, 8am &ndash; 5pm <span class="visit-appt">&middot; By appointment anytime</span></small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
-      <div class="visit-item maritime-item" data-loc="newport-harbor" data-photo="office_newport_harbor.jpg" data-type="MARITIME" data-city="Newport Beach, CA" data-address="3101 West Coast Highway, Suite 130, Newport Beach, CA 92663" data-phone="(949) 524-3143" data-phone-href="tel:+19495243143" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service,Maritime" data-fact="Our Newport Beach Maritime office. Private management and co-ownership programs.">
+      <div class="visit-item maritime-item" data-loc="newport-harbor" data-region="west" data-photo="office_newport_harbor.jpg" data-type="MARITIME" data-city="Newport Beach, CA" data-address="3101 West Coast Highway, Suite 130, Newport Beach, CA 92663" data-phone="(949) 524-3143" data-phone-href="tel:+19495243143" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service,Maritime" data-fact="Our Newport Beach Maritime office. Private management and co-ownership programs.">
         <div class="visit-item-l"><span class="brow-maritime">Maritime</span>
           <h5>Newport Harbor</h5><small>Mon &ndash; Sat, 8am &ndash; 5pm <span class="visit-appt">&middot; By appointment anytime</span></small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
-      <div class="visit-item" data-loc="marina-del-rey" data-photo="office_marina_del_rey.webp" data-type="SALES OFFICE" data-city="Marina del Rey, CA" data-address="13900 Marquesas Way, Marina del Rey, CA 90292" data-phone="(310) 295-9236" data-phone-href="tel:+13102959236" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our Los Angeles sales office, representing Axopar, BRABUS, and luxury brands.">
+      <div class="visit-item" data-loc="marina-del-rey" data-region="west" data-photo="office_marina_del_rey.webp" data-type="SALES OFFICE" data-city="Marina del Rey, CA" data-address="13900 Marquesas Way, Marina del Rey, CA 90292" data-phone="(310) 295-9236" data-phone-href="tel:+13102959236" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our Los Angeles sales office, representing Axopar, BRABUS, and luxury brands.">
         <div class="visit-item-l"><h5>Marina del Rey</h5><small>Mon &ndash; Sat, 8am &ndash; 5pm <span class="visit-appt">&middot; By appointment anytime</span></small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
-      <div class="visit-item" data-loc="sausalito" data-photo="office_sausalito.jpg" data-type="SALES OFFICE" data-city="Sausalito, CA" data-address="300B Harbor Drive, Sausalito, CA 94965" data-phone="(510) 701-4880" data-phone-href="tel:+15107014880" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our Bay Area brokerage, representing Riva, Wally, and Pershing.">
+      <div class="visit-item" data-loc="sausalito" data-region="west" data-photo="office_sausalito.jpg" data-type="SALES OFFICE" data-city="Sausalito, CA" data-address="300B Harbor Drive, Sausalito, CA 94965" data-phone="(510) 701-4880" data-phone-href="tel:+15107014880" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our Bay Area brokerage, representing Riva, Wally, and Pershing.">
         <div class="visit-item-l"><h5>Sausalito</h5><small>Mon &ndash; Sat, 8am &ndash; 5pm <span class="visit-appt">&middot; By appointment anytime</span></small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
-      <div class="visit-item" data-loc="seattle" data-photo="office_seattle.jpg" data-type="SALES OFFICE" data-city="Seattle, WA" data-address="2288 W Commodore Way, Suite 110, Seattle, WA 98199" data-phone="(206) 274-5257" data-phone-href="tel:+12062745257" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our Pacific Northwest sales office, representing Axopar, BRABUS, and Riva.">
+      <div class="visit-item" data-loc="seattle" data-region="west" data-photo="office_seattle.jpg" data-type="SALES OFFICE" data-city="Seattle, WA" data-address="2288 W Commodore Way, Suite 110, Seattle, WA 98199" data-phone="(206) 274-5257" data-phone-href="tel:+12062745257" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our Pacific Northwest sales office, representing Axopar, BRABUS, and Riva.">
         <div class="visit-item-l"><h5>Seattle</h5><small>Mon &ndash; Sat, 8am &ndash; 5pm <span class="visit-appt">&middot; By appointment anytime</span></small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
-      <div class="visit-item" data-loc="kona" data-photo="office_kona.jpg" data-type="SALES OFFICE" data-city="Kailua-Kona, HI" data-address="73-4539 Iki Place, Kailua-Kona, HI 96740" data-phone="(808) 989-8305" data-phone-href="tel:+18089898305" data-hours="By appointment" data-services="Sales" data-fact="Our Hawaiian outpost. Private viewings by appointment only.">
+      <div class="visit-item" data-loc="kona" data-region="west" data-photo="office_kona.jpg" data-type="SALES OFFICE" data-city="Kailua-Kona, HI" data-address="73-4539 Iki Place, Kailua-Kona, HI 96740" data-phone="(808) 989-8305" data-phone-href="tel:+18089898305" data-hours="By appointment" data-services="Sales" data-fact="Our Hawaiian outpost. Private viewings by appointment only.">
         <div class="visit-item-l"><h5>Kona</h5><small>By appointment</small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
-      <div class="visit-item" data-loc="wrightsville-beach" data-photo="office_wrightsville_beach.jpg" data-type="SALES OFFICE" data-city="Wrightsville Beach, NC" data-address="100 Keel Street, Wrightsville Beach, NC 28480" data-phone="(910) 679-4158" data-phone-href="tel:+19106794158" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our East Coast sales office, representing Axopar, BRABUS, and Everglades.">
+      <div class="visit-item" data-loc="wrightsville-beach" data-region="east" data-photo="office_wrightsville_beach.jpg" data-type="SALES OFFICE" data-city="Wrightsville Beach, NC" data-address="100 Keel Street, Wrightsville Beach, NC 28480" data-phone="(910) 679-4158" data-phone-href="tel:+19106794158" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our East Coast sales office, representing Axopar, BRABUS, and Everglades.">
         <div class="visit-item-l"><h5>Wrightsville Beach</h5><small>Mon &ndash; Sat, 8am &ndash; 5pm <span class="visit-appt">&middot; By appointment anytime</span></small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
-      <div class="visit-item" data-loc="charleston" data-photo="office_charleston.jpg" data-type="SALES OFFICE" data-city="Charleston, SC" data-address="49 Immigration Street, Suite 101F, Charleston, SC 29403" data-phone="(843) 277-0777" data-phone-href="tel:+18432770777" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our South Atlantic sales office, representing Axopar, Everglades, and BRABUS.">
+      <div class="visit-item" data-loc="charleston" data-region="east" data-photo="office_charleston.jpg" data-type="SALES OFFICE" data-city="Charleston, SC" data-address="49 Immigration Street, Suite 101F, Charleston, SC 29403" data-phone="(843) 277-0777" data-phone-href="tel:+18432770777" data-hours="Mon &ndash; Sat, 8am &ndash; 5pm" data-services="Sales,Service" data-fact="Our South Atlantic sales office, representing Axopar, Everglades, and BRABUS.">
         <div class="visit-item-l"><h5>Charleston</h5><small>Mon &ndash; Sat, 8am &ndash; 5pm <span class="visit-appt">&middot; By appointment anytime</span></small></div>
         <div class="visit-item-r"><i class="ti ti-chevron-right"></i></div>
       </div>
@@ -1755,6 +1777,28 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
     });
   })();
+})();
+</script>
+<script>
+(function(){
+  document.querySelectorAll('.sec-filter').forEach(function(bar){
+    var section = bar.closest('section');
+    if(!section) return;
+    var items = section.querySelectorAll('[data-region]');
+    var subheads = section.querySelectorAll('.visit-list > h4');
+    bar.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        bar.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+        b.classList.add('on');
+        var r = b.getAttribute('data-region');
+        items.forEach(function(it){
+          it.classList.toggle('region-hide', !(r==='all' || it.getAttribute('data-region')===r));
+        });
+        // hide the "Marinas & Boatyards" / "Sales Offices" sub-headers while a region is active
+        subheads.forEach(function(h){ h.classList.toggle('region-hide', r!=='all'); });
+      });
+    });
+  });
 })();
 </script>
 </body>
