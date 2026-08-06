@@ -212,7 +212,10 @@ footer{background:var(--paper);padding:40px 40px;color:var(--mute);font-size:14p
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <img class="hero-img" src="./about-assets/hero.jpg" alt="A Jeff Brown Yachts specialist alongside a luxury yacht at the marina"/>
+  <video class="hero-img" id="hero-video" autoplay muted loop playsinline preload="auto"
+         poster="./about-assets/hero.jpg" aria-label="Jeff Brown Yachts hero video">
+    <source src="./about-assets/hero.mp4" type="video/mp4">
+  </video>
   <div class="hero-veil"></div>
   <div class="hero-text">
     <h1>A boutique yacht dealership with coast-to-coast reach</h1>
@@ -347,6 +350,19 @@ else{
   window.addEventListener('load',reveal);
   reveal();
 }
+
+/* Hero video — keep it autoplaying and looping, never stuck paused */
+(function(){
+  var v=document.getElementById('hero-video');
+  if(!v)return;
+  v.muted=true; v.setAttribute('muted','');
+  function play(){var p=v.play();if(p&&p.catch)p.catch(function(){});}
+  play();
+  v.addEventListener('canplay',play);
+  v.addEventListener('loadeddata',play);
+  v.addEventListener('pause',function(){if(!v.ended&&!document.hidden)play();});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)play();});
+})();
 </script>
 </body>
 </html>
