@@ -751,6 +751,10 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
 
   /* long spec labels inside the vessel cards wrap instead of running out */
   .v-body h4,.v-body p{overflow-wrap:anywhere}
+
+  /* the two buttons under a brand mark stack when they do not fit side by side */
+  .builders .actions{flex-wrap:wrap;justify-content:center;width:100%}
+  .builders .actions>*{flex:0 1 auto}
 }
 </style>
 </head>
