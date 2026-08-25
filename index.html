@@ -740,6 +740,17 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   /* cards in the horizontal rails size to the screen */
   .event-card{flex:0 0 84vw}
   .vessel-card{flex:0 0 78vw;height:auto;min-height:340px}
+
+  /* heading + link rows stack instead of forcing the page wider */
+  .s-title-row,.visit-head-row,.vessels-head-row,.voices-head-row{flex-direction:column;align-items:flex-start;gap:14px}
+  .s-title-row{padding-left:24px;padding-right:24px}
+
+  /* the uppercase email is one unbreakable token: one size step down keeps it inside */
+  .foot-col p{font-size:14px;line-height:18px}
+  .foot-col p a{font-size:inherit}
+
+  /* long spec labels inside the vessel cards wrap instead of running out */
+  .v-body h4,.v-body p{overflow-wrap:anywhere}
 }
 </style>
 </head>
