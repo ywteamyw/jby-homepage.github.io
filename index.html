@@ -725,6 +725,18 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
 /* MOBILE POLISH (phones only, nothing above 600px is touched)            */
 /* ====================================================================== */
 @media (max-width:600px){
+  /* the header keeps burger, logo and search; the wide CTA does not fit a phone
+     (every other page of the site already hides it at this width) */
+  .nav{grid-template-columns:1fr auto 1fr;padding:14px 20px}
+  .nav.scrolled{padding:10px 20px}
+  .nav .cta{display:none}
+  .nav .logo{width:48px;height:48px}
+  .nav.scrolled .logo{width:44px;height:44px}
+
+  /* the sticky section index sits right under a shorter header */
+  .section-index{top:76px;font-size:13px}
+  .si-item{font-size:13px}
+
   /* brand marks were 457px wide on a 375px screen and blew the layout out */
   .builders .mark img{height:auto;max-height:60px;max-width:100%}
   .builders .mark .word{font-size:36px;line-height:1.1}
