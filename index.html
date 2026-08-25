@@ -764,6 +764,11 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   /* long spec labels inside the vessel cards wrap instead of running out */
   .v-body h4,.v-body p{overflow-wrap:anywhere}
 
+  /* one heading size on phones: the page mixed 32px and 24px section titles */
+  .what-we-do h2,.videos .head h2,.visit h2,.s-title-row h2,.voices h2{font-size:26px;line-height:36px}
+  .s-title-row>*{max-width:100%}
+  .videos .head p,.what-we-do .lead{font-size:16px;line-height:26px}
+
   /* the two buttons under a brand mark stack when they do not fit side by side */
   .builders .actions{flex-wrap:wrap;justify-content:center;width:100%}
   .builders .actions>*{flex:0 1 auto}
