@@ -78,6 +78,7 @@ a{color:inherit;text-decoration:none}
 .hero-text p{font-family:'Myriad Pro',sans-serif;font-weight:300;font-size:20px;line-height:28px;color:rgba(255,255,255,0.92);
   margin:0 0 32px;max-width:720px}
 .hero-cta{display:flex;gap:20px;flex-wrap:wrap}
+.m-br{display:none}
 /* hero text rises in sequence on load */
 @keyframes heroUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 .hero-text h1{animation:heroUp .9s var(--ease) .15s both}
@@ -86,7 +87,8 @@ a{color:inherit;text-decoration:none}
 @media (max-width:980px){
   .hero{height:clamp(620px,86vh,860px)}
   .hero-text{left:24px;right:24px;bottom:48px}
-  .hero-text h1{font-size:26px;line-height:36px}
+  .hero-text h1{font-size:22px;line-height:30px}
+  .hero-text h1 .m-br{display:inline}
   .hero-text p{font-size:17px;line-height:26px}
   .hero-cta{flex-direction:column;gap:16px;width:100%}
   .hero-cta .btn-solid,.hero-cta .btn-ghost{width:100%;justify-content:center}
@@ -114,6 +116,7 @@ a{color:inherit;text-decoration:none}
 .stats-head{text-align:center;max-width:1180px;margin:0 auto 48px}
 .stats-head h2{font-family:'Mesmerize',sans-serif;font-weight:300;font-size:32px;line-height:48px;letter-spacing:0;
   text-transform:uppercase;color:var(--ink);margin:0 0 8px}
+.stats-head h2 .stat-m{display:none}
 .stats-head p{font-family:'Myriad Pro',sans-serif;font-weight:300;font-size:20px;line-height:28px;color:var(--mute);margin:0 auto;max-width:640px}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .stat-card{background:var(--section);border-radius:2px;padding:24px;min-height:140px;display:flex;flex-direction:column;
@@ -123,7 +126,9 @@ a{color:inherit;text-decoration:none}
 .stat-card .v{font-family:'Myriad Pro',sans-serif;font-weight:400;font-size:16px;line-height:24px;color:var(--mute);margin:0;max-width:283px}
 @media (max-width:980px){
   .stats{padding:80px 24px 0}
-  .stats-head h2{font-size:22px;line-height:30px}
+  .stats-head h2{font-size:18px;line-height:26px}
+  .stats-head h2 .stat-d{display:none}
+  .stats-head h2 .stat-m{display:inline}
   .stats-grid{grid-template-columns:1fr 1fr;gap:12px}
 }
 @media (max-width:560px){.stats-grid{grid-template-columns:1fr}}
@@ -159,7 +164,7 @@ a{color:inherit;text-decoration:none}
 .help h2{font-family:'Mesmerize',sans-serif;font-weight:300;font-size:32px;line-height:48px;letter-spacing:0;text-transform:uppercase;margin:0}
 .help p{font-family:'Myriad Pro',sans-serif;font-weight:300;font-size:20px;line-height:28px;color:rgba(255,255,255,0.92);margin:0}
 .help .btn-ghost{height:48px;font-size:16px;line-height:20px;padding:0 32px;margin-top:8px}
-@media (max-width:980px){.help{padding:0 24px}.help h2{font-size:24px;line-height:34px;white-space:nowrap}}
+@media (max-width:980px){.help{padding:0 24px}.help h2{font-size:24px;line-height:34px;white-space:nowrap}.help .btn-ghost{width:100%;justify-content:center}}
 
 /* ============================== FOOTER ============================== */
 footer{background:var(--paper);padding:40px 40px 80px;color:var(--mute);font-size:16px;border-top:0.5px solid var(--line);position:relative}
@@ -188,7 +193,7 @@ footer{background:var(--paper);padding:40px 40px 80px;color:var(--mute);font-siz
   display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s}
 .back-top:hover{background:rgba(0,0,0,0.85)}
 .back-top svg{width:20px;height:20px;display:block;transform:rotate(-90deg)}
-@media(max-width:860px){.foot-grid{grid-template-columns:1fr;align-items:flex-start}.foot-col{padding-top:0}.back-top{position:static;margin-top:24px}}
+@media(max-width:860px){.foot-grid{grid-template-columns:1fr;align-items:flex-start}.foot-col{padding-top:0}.back-top{position:absolute;top:40px;right:40px;margin-top:0}}
 
 /* ============================== SCROLL REVEAL ============================== */
 .rise{opacity:0;transform:translateY(72px);transition:opacity 1s var(--ease),transform 1.1s var(--ease)}
@@ -233,8 +238,8 @@ footer{background:var(--paper);padding:40px 40px 80px;color:var(--mute);font-siz
   </video>
   <div class="hero-veil"></div>
   <div class="hero-text">
-    <h1>A boutique yacht dealership with coast-to-coast reach</h1>
-    <p>Jeff Brown Yachts brings new yacht sales, brokerage, service, and yacht management together through a team of specialists in leading boating markets.</p>
+    <h1>Coast-to-coast<br class="m-br"> yacht dealership.</h1>
+    <p>Yacht sales, brokerage, service, and management under one expert team.</p>
     <div class="hero-cta">
       <button class="btn-solid" data-scroll="#team">Meet the Team</button>
       <button class="btn-ghost" data-scroll="#locations">Find an Office</button>
@@ -261,7 +266,7 @@ footer{background:var(--paper);padding:40px 40px 80px;color:var(--mute);font-siz
 <section class="stats" id="why">
   <div class="stats-inner">
     <div class="stats-head rise">
-      <h2>Built around personal guidance, local knowledge, and serious inventory.</h2>
+      <h2><span class="stat-d">Personal guidance, local knowledge, serious inventory.</span><span class="stat-m">Guidance, knowledge, serious inventory.</span></h2>
       <p>We helps clients buy, sell, service, and enjoy premium yachts through experienced local teams and a carefully selected portfolio of leading marine brands.</p>
     </div>
     <div class="stats-grid">
