@@ -768,15 +768,14 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   .bento-cta{white-space:nowrap}
   /* Locations head: short title + button on one row */
   .visit-head-row{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap}
-  /* Client stories: remove the "More client stories" block; thumbs become a horizontal scroll row */
+  /* Client stories: hero + thumbs in ONE horizontal-scroll row */
   .voices-sub{display:none}
-  .video-thumbs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:12px;scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
-  .video-thumbs::-webkit-scrollbar{display:none}
-  .v-thumb{flex:0 0 80%;scroll-snap-align:start}
-  /* Big video: keep the play button clear of the name text */
-  .video-hero .play{top:38%}
-  .video-hero .meta{bottom:18px;left:20px;right:20px}
+  .video-stage{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:12px;margin-top:24px;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .video-stage::-webkit-scrollbar{display:none}
+  .video-thumbs{display:contents}
+  .video-hero,.v-thumb{flex:0 0 86%;scroll-snap-align:start;aspect-ratio:16/9}
+  .video-hero .play{width:56px;height:56px;font-size:18px}
   .event-card .body h4{font-size:16px;line-height:22px;min-height:0}
   /* Location modal: smaller title so it fits (match jby-locations look) */
   .loc-modal-body h3{font-size:24px;line-height:30px}
@@ -801,9 +800,10 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   .builders-tabs{margin-top:auto}   /* keep tabs pinned to the bottom */
   .builders .actions{flex-wrap:nowrap;justify-content:center;gap:10px}
   .builders .a{padding:0 16px;white-space:nowrap;font-size:14px;height:44px}
-  /* --- CLIENT STORIES: center label text in each card --- */
-  .v-thumb .v-body{left:0;right:0;text-align:center;padding:0 16px}
-  .video-hero .meta{left:0;right:0;text-align:center;padding:0 16px}
+  /* --- CLIENT STORIES: labels centered in the middle of each card --- */
+  .v-thumb .v-body{top:0;bottom:0;left:0;right:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;padding:0 16px}
+  .video-hero .meta{left:0;right:0;text-align:center;padding:0 16px;bottom:16px}
 }
 </style>
 </head>
