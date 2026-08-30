@@ -129,7 +129,7 @@ a{color:inherit;text-decoration:none}
 /* ====================================================================== */
 /* HERO — full viewport height for video, gradient veil for nav readability */
 /* ====================================================================== */
-.hero{position:relative;width:100%;height:100vh;min-height:620px;
+.hero{position:relative;width:100%;height:100vh;height:100svh;min-height:620px;
   overflow:hidden;background:#0a1620;color:#fff}
 .hero-bg{position:absolute;top:-25%;left:0;width:100%;height:150%;
   background-size:cover;background-position:center;background-color:#0a1620;
@@ -424,7 +424,7 @@ a{color:inherit;text-decoration:none}
 .video-hero:hover .bg{transform:scale(1.04)}
 .video-hero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 50%,rgba(0,0,0,0.6) 100%)}
 .video-hero .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:96px;height:96px;
-  border-radius:2px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);
+  border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);
   border:0.5px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:#fff;
   font-size:30px;z-index:3;transition:.3s}
 .video-hero:hover .play{background:rgba(255,255,255,0.28);transform:translate(-50%,-50%)}
@@ -720,65 +720,67 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
 .foot-locs{display:flex;flex-direction:column;gap:14px;margin:0}
 .foot-locs a{font-family:'Mesmerize',sans-serif;font-weight:300;font-size:16px;line-height:20px;letter-spacing:0;text-transform:uppercase;color:var(--ink);text-decoration:none;transition:color .2s}
 .foot-locs a:hover{color:var(--navy)}
-
-/* ====================================================================== */
-/* MOBILE POLISH (phones only, nothing above 600px is touched)            */
-/* ====================================================================== */
-@media (max-width:600px){
-  /* the header keeps burger, logo and search; the wide CTA does not fit a phone
-     (every other page of the site already hides it at this width) */
-  .nav{grid-template-columns:1fr auto 1fr;padding:14px 20px}
-  .nav.scrolled{padding:10px 20px}
-  .nav .cta{display:none}
-  .nav .logo{width:48px;height:48px}
-  .nav.scrolled .logo{width:44px;height:44px}
-
-  /* the sticky section index sits right under a shorter header */
-  .section-index{top:76px;font-size:13px}
-  .si-item{font-size:13px}
-
-  /* brand marks were 457px wide on a 375px screen and blew the layout out */
-  .builders .mark img{height:auto;max-height:60px;max-width:100%}
-  .builders .mark .word{font-size:36px;line-height:1.1}
-  .builders .mark{min-height:96px}
-
-  /* filter rows scroll on one line instead of overflowing */
-  .sec-filter{flex-wrap:nowrap;overflow-x:auto;gap:20px;padding-left:24px;padding-right:24px;
-    scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .sec-filter::-webkit-scrollbar{display:none}
-  .sec-filter button{flex:0 0 auto;white-space:nowrap}
-  .sec-filter-visit{padding-left:0;padding-right:0}
-
-  /* cards in the horizontal rails size to the screen */
-  .event-card{flex:0 0 84vw}
-  .vessel-card{flex:0 0 78vw;height:auto;min-height:340px}
-
-  /* heading + link rows stack instead of forcing the page wider */
-  .s-title-row,.visit-head-row,.vessels-head-row,.voices-head-row{flex-direction:column;align-items:flex-start;gap:14px}
-  .s-title-row{padding-left:24px;padding-right:24px}
-
-  /* the uppercase email is one unbreakable token: one size step down keeps it inside */
-  .foot-col p{font-size:14px;line-height:18px}
-  .foot-col p a{font-size:inherit}
-
-  /* long spec labels inside the vessel cards wrap instead of running out */
-  .v-body h4,.v-body p{overflow-wrap:anywhere}
-
-  /* one heading size on phones: the page mixed 32px and 24px section titles */
-  .what-we-do h2,.videos .head h2,.visit h2,.s-title-row h2,.voices h2{font-size:26px;line-height:36px}
-  .s-title-row>*{max-width:100%}
-  .videos .head p,.what-we-do .lead{font-size:16px;line-height:26px}
-
-  /* the two buttons under a brand mark stack when they do not fit side by side */
-  .builders .actions{flex-wrap:wrap;justify-content:center;width:100%}
-  .builders .actions>*{flex:0 1 auto}
-}
-/* Card chevron removed - whole card is the click target (buggy white/scale on tap) */
+/* Card chevron removed — whole card is the click target (buggy white/scale on tap) */
 .v-cta{display:none!important}
 /* MOBILE-FIX-KSENIA: kill horizontal scroll on phones */
 @media (max-width:980px){html,body{overflow-x:hidden}}
 @media (max-width:600px){.nav .cta{display:none}}
 @media (max-width:600px){.mark img{max-width:100%;height:auto}.s-title-row{flex-wrap:wrap}}
+
+/* ====================================================================== */
+/* MOBILE POLISH (phones ≤640px) — batch fixes                            */
+/* ====================================================================== */
+.ttl-mobile{display:none}
+@media (max-width:640px){
+  /* Hero: svh controls height; drop the 620px floor so the CTA stays visible */
+  .hero{min-height:0}
+  .hero .btn-hero{width:100%;justify-content:center}
+  /* Intro CTAs: full-width, stacked */
+  .intro-cta{flex-direction:column;width:100%;gap:12px}
+  .intro-cta .btn-solid,.intro-cta .btn-outline{width:100%;justify-content:center}
+  .expert .btn{width:100%;justify-content:center}
+  /* Section-index sits flush under the header (no gap) */
+  .section-index{top:70px}
+  /* Featured event: kill the 100vh empty gap + disable scroll-zoom on phones */
+  .featured-event-stage{min-height:0}
+  .featured-event{height:54vh;transform:none !important}
+  /* Brand tabs: single horizontal-scroll row */
+  .builders-tabs{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:22px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .builders-tabs::-webkit-scrollbar{display:none}
+  /* Smaller section headings for mobile */
+  .s-title,.s-title-row h2,.vessels-head-row h2,.videos .head h2,.visit-head-row h2,
+  .what-we-do .head h2,.intro h2,.expert h2{font-size:22px;line-height:32px}
+  /* Events strip title: short label on mobile */
+  .ttl-desktop{display:none}.ttl-mobile{display:inline}
+  /* --- CONSISTENT VERTICAL SPACING (single rule for phones) --- */
+  :root{--section-pad:64px}
+  /* gap from a section head (title + subtitle) to its content = 32px everywhere */
+  .what-we-do .head{margin-bottom:32px}
+  .videos .head{margin-bottom:32px}
+  .pillars{gap:32px}
+  /* title-block bottom paddings tightened + unified */
+  .s-title,.events-zone .s-title,.portfolio .s-title,.aftercare .s-title{padding-bottom:28px}
+  .visit-head-row{padding-bottom:24px}
+  .vessels-head-row{padding-bottom:24px}
+  /* Bento CTAs: drop "Explore" so the label fits one line */
+  .expl{display:none}
+  .bento-cta{white-space:nowrap}
+  /* Locations head: short title + button on one row */
+  .visit-head-row{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap}
+  /* Client stories: remove the "More client stories" block; thumbs become a horizontal scroll row */
+  .voices-sub{display:none}
+  .video-thumbs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:12px;scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+  .video-thumbs::-webkit-scrollbar{display:none}
+  .v-thumb{flex:0 0 80%;scroll-snap-align:start}
+  /* Big video: keep the play button clear of the name text */
+  .video-hero .play{top:38%}
+  .video-hero .meta{bottom:18px;left:20px;right:20px}
+  /* Location modal: smaller title so it fits (match jby-locations look) */
+  .loc-modal-body h3{font-size:24px;line-height:30px}
+  .loc-modal-body{padding:20px 24px 24px}
+}
 </style>
 </head>
 <body>
@@ -931,7 +933,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   </div>
   <div class="events-grid-wrap">
     <div class="s-title-row reveal">
-      <h2>Upcoming events &amp; private experiences</h2>
+      <h2><span class="ttl-desktop">Upcoming events &amp; private experiences</span><span class="ttl-mobile">Upcoming events</span></h2>
       <a class="s-link" href="#">View all events</a>
     </div>
     <div class="sec-filter reveal" role="tablist" aria-label="Filter events by region">
@@ -1099,7 +1101,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div class="bento-body">
         <h3>Yacht management</h3>
         <p>End-to-end support for operations, crew, service, and ownership logistics, handled with expert oversight.</p>
-        <button class="bento-cta">Explore yacht management <i class="ti ti-chevron-right"></i></button>
+        <button class="bento-cta"><span class="expl">Explore </span>yacht management <i class="ti ti-chevron-right"></i></button>
       </div>
     </div>
     <div class="bento-cell reveal d2" data-parallax-bg="0.20">
@@ -1110,7 +1112,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div class="bento-body">
         <h3>Service &amp; maintenance</h3>
         <p>Yacht service, maintenance coordination, and technical support to keep your vessel ready for the water.</p>
-        <button class="bento-cta">Explore service &amp; maintenance <i class="ti ti-chevron-right"></i></button>
+        <button class="bento-cta"><span class="expl">Explore </span>service &amp; maintenance <i class="ti ti-chevron-right"></i></button>
       </div>
     </div>
     <div class="bento-cell reveal d1" data-parallax-bg="0.20">
@@ -1121,7 +1123,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div class="bento-body">
         <h3>Sell your yacht</h3>
         <p>Pricing, marketing, and expert brokerage to connect your yacht with the right qualified buyers.</p>
-        <button class="bento-cta">Explore selling services <i class="ti ti-chevron-right"></i></button>
+        <button class="bento-cta"><span class="expl">Explore </span>selling services <i class="ti ti-chevron-right"></i></button>
       </div>
     </div>
     <div class="bento-cell span2 reveal" data-parallax-bg="0.20">
@@ -1132,7 +1134,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div class="bento-body">
         <h3>Co-ownership</h3>
         <p>Access to premium boating, with less complexity and ownership responsibility.</p>
-        <button class="bento-cta">Explore Mari-Time <i class="ti ti-chevron-right"></i></button>
+        <button class="bento-cta"><span class="expl">Explore </span>Mari-Time <i class="ti ti-chevron-right"></i></button>
       </div>
     </div>
     <div class="bento-cell reveal d1" data-parallax-bg="0.20">
@@ -1162,7 +1164,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
 
 <section class="visit" id="visit">
   <div class="visit-head-row reveal">
-    <h2 class="split-words" data-split>Locations, Marinas &amp; Boatyards</h2>
+    <h2><span class="ttl-desktop">Locations, Marinas &amp; Boatyards</span><span class="ttl-mobile">Locations</span></h2>
     <a class="s-link" href="#">View all</a>
   </div>
   <div class="sec-filter sec-filter-visit reveal" role="tablist" aria-label="Filter locations by region">
@@ -1246,7 +1248,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
 <footer>
   <div class="foot-grid">
     <div>
-      <div class="foot-logo" aria-label="JBY"><img src="./assets/jby_logo.svg" alt=""/></div>
+      <div class="foot-logo" aria-label="JBY"><img src="./JBY-V3.3-assets/jby_logo.svg" alt=""/></div>
       <nav class="foot-nav">
         <a href="#top">Home</a>
         <span class="sep">/</span>
