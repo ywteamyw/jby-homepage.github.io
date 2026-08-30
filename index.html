@@ -338,6 +338,8 @@ a{color:inherit;text-decoration:none}
   cursor:pointer;z-index:10;
   transition:background .3s ease, transform .35s cubic-bezier(0.22, 1, 0.36, 1)}
 .cards-scroll-arr:hover{background:rgba(0,0,0,0.7);transform:translateY(-50%)}
+.cards-scroll-arr.l{left:20px;right:auto}
+.video-scroll-wrap{position:relative}
 /* Grid template columns transition — buttery smooth, browser optimizes better
    than flex-grow (no layout thrashing per card). :has() lets each card control the row. */
 .vessels-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
@@ -768,14 +770,22 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   .bento-cta{white-space:nowrap}
   /* Locations head: short title + button on one row */
   .visit-head-row{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap}
-  /* Client stories: hero + thumbs in ONE horizontal-scroll row */
+  /* Client stories: one horizontal-scroll row; caption BELOW each card, no play button */
   .voices-sub{display:none}
   .video-stage{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:12px;margin-top:24px;
     scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .video-stage::-webkit-scrollbar{display:none}
   .video-thumbs{display:contents}
-  .video-hero,.v-thumb{flex:0 0 86%;scroll-snap-align:start;aspect-ratio:16/9}
-  .video-hero .play{width:56px;height:56px;font-size:18px}
+  .video-hero,.v-thumb{flex:0 0 86%;scroll-snap-align:start;aspect-ratio:auto;background:transparent;
+    overflow:visible;display:flex;flex-direction:column}
+  .video-hero .bg,.v-thumb .bg{position:relative;inset:auto;width:100%;aspect-ratio:16/9;border-radius:2px;flex:0 0 auto}
+  .video-hero .veil,.v-thumb .veil,.video-hero .play{display:none}
+  .video-hero .meta,.v-thumb .v-body{position:static;transform:none;inset:auto;padding:10px 4px 0;text-align:center}
+  .video-hero .meta .who,.v-thumb .v-body h4{color:var(--ink)}
+  .video-hero .meta .vessel,.v-thumb .v-body p{color:var(--mute)}
+  .cards-scroll-arr.vid{top:100px}
+  .bento-body{left:24px;right:24px;top:0;bottom:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center}
   .event-card .body h4{font-size:16px;line-height:22px;min-height:0}
   /* Location modal: smaller title so it fits (match jby-locations look) */
   .loc-modal-body h3{font-size:24px;line-height:30px}
@@ -802,10 +812,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   .builders-tabs{margin-top:auto}   /* keep tabs pinned to the bottom */
   .builders .actions{flex-wrap:nowrap;justify-content:center;gap:10px}
   .builders .a{padding:0 16px;white-space:nowrap;font-size:14px;height:44px}
-  /* --- CLIENT STORIES: labels centered in the middle of each card --- */
-  .v-thumb .v-body{top:0;bottom:0;left:0;right:0;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;padding:0 16px}
-  .video-hero .meta{left:0;right:0;text-align:center;padding:0 16px;bottom:16px}
+
 }
 </style>
 </head>
@@ -1077,7 +1084,10 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
     <h2 class="split-words" data-split>Owners, in their own words</h2>
     <p>A few conversations with owners, on their first boat and their fifth.</p>
   </div>
-  <div class="video-stage reveal d1">
+  <div class="video-scroll-wrap">
+    <button class="cards-scroll-arr l vid" aria-label="Previous story" onclick="videosScroll(-1)"><i class="ti ti-chevron-left"></i></button>
+    <button class="cards-scroll-arr vid" aria-label="Next story" onclick="videosScroll(1)"><i class="ti ti-chevron-right"></i></button>
+  <div class="video-stage reveal d1" id="video-stage">
     <div class="video-hero">
       <div class="bg" style="background-image:url('./JBY-V3.3-assets/clean_bento_sm.jpg')"></div>
       <div class="veil"></div>
@@ -1114,6 +1124,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
         </div>
       </article>
     </div>
+  </div>
   </div>
 </section>
 
@@ -1791,6 +1802,10 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   window.eventsScroll = function(dir){
     const strip = document.getElementById('events-strip');
     if (strip) strip.scrollBy({left: dir * 444, behavior: 'smooth'});
+  };
+  window.videosScroll = function(dir){
+    const s = document.getElementById('video-stage');
+    if (s) s.scrollBy({left: dir * (s.clientWidth * 0.9 + 12), behavior: 'smooth'});
   };
   // Event cards with video — play on hover, pause on leave
   document.querySelectorAll('.event-card.has-video').forEach(function(card){
