@@ -204,7 +204,7 @@ a{color:inherit;text-decoration:none}
 .events-grid-wrap .s-title-row{padding:0 40px}
 /* Horizontal auto-scrolling strip with 6 cards */
 .events-strip-wrap{position:relative;margin-top:40px;overflow:hidden;padding:8px 0}
-.events-strip{display:flex;gap:24px;overflow-x:auto;scroll-behavior:smooth;
+.events-strip{display:flex;gap:24px;overflow-x:auto;overflow-y:hidden;scroll-behavior:smooth;
   padding:8px 40px 32px;scrollbar-width:none}
 .events-strip::-webkit-scrollbar{display:none}
 .event-card{flex:0 0 420px;background:#fff;border-radius:2px;overflow:hidden;cursor:pointer;
@@ -773,7 +773,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   .visit-head-row{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap}
   /* Client stories: one horizontal-scroll row; caption BELOW each card, no play button */
   .voices-sub{display:none}
-  .video-stage{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:12px;margin-top:24px;
+  .video-stage{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:12px;margin-top:24px;
     scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .video-stage::-webkit-scrollbar{display:none}
   .video-thumbs{display:contents}
@@ -1814,6 +1814,24 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
     const s = document.getElementById('video-stage');
     if (s) s.scrollBy({left: dir * (s.clientWidth * 0.9 + 12), behavior: 'smooth'});
   };
+  // Show/hide scroll chevrons by position: left hidden at start, right hidden at end
+  function wireArrows(scrollId, wrap){
+    var el = document.getElementById(scrollId);
+    if (!el || !wrap) return;
+    var left = wrap.querySelector('.cards-scroll-arr.l');
+    var right = wrap.querySelector('.cards-scroll-arr:not(.l)');
+    function upd(){
+      var atStart = el.scrollLeft <= 4;
+      var atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      if (left) left.style.display = atStart ? 'none' : 'flex';
+      if (right) right.style.display = atEnd ? 'none' : 'flex';
+    }
+    el.addEventListener('scroll', upd, {passive:true});
+    window.addEventListener('resize', upd);
+    setTimeout(upd, 60);
+  }
+  wireArrows('events-strip', document.querySelector('.events-strip-wrap'));
+  wireArrows('video-stage', document.querySelector('.video-scroll-wrap'));
   // Event cards with video — play on hover, pause on leave
   document.querySelectorAll('.event-card.has-video').forEach(function(card){
     var v = card.querySelector('.event-video');
