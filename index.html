@@ -780,6 +780,21 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   /* Location modal: smaller title so it fits (match jby-locations look) */
   .loc-modal-body h3{font-size:24px;line-height:30px}
   .loc-modal-body{padding:20px 24px 24px}
+  /* --- CONSISTENT 24px LEFT GUTTER for all section content --- */
+  .events-grid-wrap .s-title-row{padding:0}            /* events title -> 24 */
+  .events-strip-wrap{padding:8px 0}
+  .events-strip{padding:0}                             /* event cards -> 24 */
+  .sec-filter{padding:0}                               /* events filter -> 24 */
+  .vessels-strip{padding:0 !important}
+  .vessels-strip-wrap{padding:0 24px}   /* vessel cards -> 24 via wrap gutter */
+  /* --- BRANDS: only logo + 2 buttons in one compact row --- */
+  .builders .caption{display:none}
+  .builders-inner{min-height:auto;justify-content:center;gap:26px;padding:72px 24px 36px}
+  .builders .actions{flex-wrap:nowrap;justify-content:center;gap:10px}
+  .builders .a{padding:0 16px;white-space:nowrap;font-size:14px;height:44px}
+  /* --- CLIENT STORIES: center label text in each card --- */
+  .v-thumb .v-body{left:0;right:0;text-align:center;padding:0 16px}
+  .video-hero .meta{left:0;right:0;text-align:center;padding:0 16px}
 }
 </style>
 </head>
