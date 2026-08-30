@@ -898,7 +898,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       <a class="s-link" href="#">See all</a>
     </div>
     <div class="vessels-strip-wrap">
-      <div class="vessels-strip"><article class="vessel-card reveal">
+      <div class="vessels-strip" id="vessels-strip"><article class="vessel-card reveal">
         <div class="v-img" style="background-image:url('./JBY-V3.3-assets/03_vessel1_axopar.jpg')"></div>
         <div class="v-img-veil"></div>
         <div class="brand"><img src="./JBY-V3.3-assets/brand_axopar_raw.png" alt=""/></div>
@@ -955,6 +955,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
           <span class="v-cta-icon"><i class="ti ti-chevron-right"></i></span>
         </button>
       </article></div>
+      <button class="cards-scroll-arr l" aria-label="Previous vessels" onclick="vesselsScroll(-1)"><i class="ti ti-chevron-left"></i></button>
       <button class="cards-scroll-arr" aria-label="More vessels" onclick="vesselsScroll(1)"><i class="ti ti-chevron-right"></i></button>
     </div>
   </div>
@@ -1763,6 +1764,8 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
     const brandCta = document.getElementById('brand-cta');
     if (brandCta && b.cta) brandCta.textContent = b.cta;
     document.querySelectorAll('.b-tab').forEach((t,k) => t.classList.toggle('active', k === bi));
+    var _at = document.querySelector('.b-tab.active'), _tabs = document.querySelector('.builders-tabs');
+    if (_at && _tabs){ _tabs.scrollTo({left: _at.offsetLeft - (_tabs.clientWidth - _at.offsetWidth)/2, behavior:'smooth'}); }
   }
   // Auto-rotate every 4s. Any user interaction (tab click, arrow) restarts the timer.
   var _brandTimer = null;
@@ -1803,8 +1806,8 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
 
   // VESSELS CAROUSEL right arrow scroll
   window.vesselsScroll = function(dir){
-    const strip = document.querySelector('.vessels-strip');
-    if (strip) strip.scrollBy({left: dir * 400, behavior: 'smooth'});
+    const strip = document.getElementById('vessels-strip');
+    if (strip) strip.scrollBy({left: (dir||1) * (strip.clientWidth * 0.85 + 20), behavior: 'smooth'});
   };
 
   // Events strip — no autoscroll, but right chevron button scrolls by one card
@@ -1834,6 +1837,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   }
   wireArrows('events-strip', document.querySelector('.events-strip-wrap'));
   wireArrows('video-stage', document.querySelector('.video-scroll-wrap'));
+  wireArrows('vessels-strip', document.querySelector('.vessels-strip-wrap'));
   // Event cards with video — play on hover, pause on leave
   document.querySelectorAll('.event-card.has-video').forEach(function(card){
     var v = card.querySelector('.event-video');
@@ -1845,11 +1849,6 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       v.pause();
     });
   });
-  // Vessels row — grid layout doesn't scroll; arrow scrolls to next section (portfolio)
-  window.vesselsScroll = function(){
-    const target = document.querySelector('.vessels');
-    if (target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
-  };
 
   // MAP — Mapbox (production) with Leaflet + CARTO fallback (staging/localhost).
   // Ported from the office page so the map renders on any domain. Defaults to
