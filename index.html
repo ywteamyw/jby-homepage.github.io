@@ -779,17 +779,24 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   .video-hero .meta{bottom:18px;left:20px;right:20px}
   /* Location modal: smaller title so it fits (match jby-locations look) */
   .loc-modal-body h3{font-size:24px;line-height:30px}
+  /* Section head-rows: title + button on one row (mobile) */
+  .vessels-head-row{flex-direction:row;align-items:center;justify-content:space-between;gap:14px}
+  .s-title-row{flex-wrap:nowrap;align-items:center;gap:14px}
+  .s-title-row h2{white-space:nowrap}
   .loc-modal-body{padding:20px 24px 24px}
   /* --- CONSISTENT 24px LEFT GUTTER for all section content --- */
   .events-grid-wrap .s-title-row{padding:0}            /* events title -> 24 */
   .events-strip-wrap{padding:8px 0}
   .events-strip{padding:0}                             /* event cards -> 24 */
+  .event-card{flex:0 0 82%}                            /* narrower so the next card peeks */
   .sec-filter{padding:0}                               /* events filter -> 24 */
   .vessels-strip{padding:0 !important}
   .vessels-strip-wrap{padding:0 24px}   /* vessel cards -> 24 via wrap gutter */
   /* --- BRANDS: only logo + 2 buttons in one compact row --- */
   .builders .caption{display:none}
-  .builders-inner{min-height:auto;justify-content:center;gap:26px;padding:72px 24px 36px}
+  .builders-inner{min-height:560px;justify-content:flex-start;gap:22px;padding:56px 24px 32px}
+  .builders-top{gap:20px}
+  .builders-tabs{margin-top:auto}   /* keep tabs pinned to the bottom */
   .builders .actions{flex-wrap:nowrap;justify-content:center;gap:10px}
   .builders .a{padding:0 16px;white-space:nowrap;font-size:14px;height:44px}
   /* --- CLIENT STORIES: center label text in each card --- */
@@ -949,7 +956,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
   <div class="events-grid-wrap">
     <div class="s-title-row reveal">
       <h2><span class="ttl-desktop">Upcoming events &amp; private experiences</span><span class="ttl-mobile">Upcoming events</span></h2>
-      <a class="s-link" href="#">View all events</a>
+      <a class="s-link" href="#"><span class="ttl-desktop">View all events</span><span class="ttl-mobile">View events</span></a>
     </div>
     <div class="sec-filter reveal" role="tablist" aria-label="Filter events by region">
       <button class="on" data-region="all">All</button>
@@ -957,6 +964,7 @@ a:focus-visible,button:focus-visible,[role="button"]:focus-visible,input:focus-v
       <button data-region="east">East Coast</button>
     </div>
     <div class="events-strip-wrap reveal" style="position:relative">
+      <button class="cards-scroll-arr l" aria-label="Previous events" onclick="eventsScroll(-1)"><i class="ti ti-chevron-left"></i></button>
       <button class="cards-scroll-arr" aria-label="Next events" onclick="eventsScroll(1)"><i class="ti ti-chevron-right"></i></button>
       <div class="events-strip" id="events-strip">
         <article class="event-card has-video" data-region="west">
